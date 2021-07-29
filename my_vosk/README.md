@@ -1,5 +1,5 @@
 # 准备
-1. 在电脑上（非Pi）创建环境，激活环境。
+1. 在电脑上（非Pi）创建环境```python==3.7.3```，激活环境。
 
 1. 安装```portaudio```：
     - Win/Mac/Linux: ```conda install portaudio```

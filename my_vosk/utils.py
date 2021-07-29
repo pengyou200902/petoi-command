@@ -116,7 +116,8 @@ class Listener:
         self.rate = rate
         self.window_size = int(2 / CHUNK_TIME)
         self.template = template
-        self.thresh = 70  # For Mac
+        self.thresh = 0  # For finding proper threshold.
+        # self.thresh = 70  # For Mac
         # self.thresh = 50 # For Pi
 
         self._wakeup = False
@@ -124,7 +125,6 @@ class Listener:
         self._frame_window = deque([], maxlen=self.window_size)
         self._frames = deque([], maxlen=int(5 / CHUNK_TIME))
         print(f'Listener唤醒词使用模板：{self.template.file_path}')
-
 
     def listening(self):
         result = ''
@@ -304,7 +304,7 @@ class Voice:
             self.mfcc = None
             self.__load_data(path_or_data)
         elif isinstance(path_or_data, (list, np.ndarray, bytes)):
-            logger.debug("Constructor got audio data")
+            logger.debug("Voice's constructor got audio data")
             self.file_path = None
             self.mfcc = None
             self.wave_data = path_or_data

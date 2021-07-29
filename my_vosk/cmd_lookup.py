@@ -53,9 +53,6 @@ def text2cmd(text):
 #     for k in keys:
 #         d += list(k)
 #     d = [" ".join(list(set(d)))]
-#     # d = [" ".join(list(set(d))), "啊"]
 #     d = str(d).replace("'", "\"")
 #     print(d)
 #     return d
-
-# build_dict()

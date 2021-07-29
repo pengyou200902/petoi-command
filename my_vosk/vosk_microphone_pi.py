@@ -8,7 +8,7 @@ import vosk
 import utils
 from cmd_lookup import text2cmd, build_dict
 from serialMaster import ardSerial
-
+from serial.serialutil import SerialException
 
 FORMAT = '%(asctime)-15s %(name)s - %(levelname)s - %(message)s'
 logging.basicConfig(level=logging.DEBUG, format=FORMAT)
@@ -59,7 +59,7 @@ def action_listen(ser, model, sample_rate, d, chunk):
         # The 3rd argument(can be omitted) is a custom dictionary including all candidate words/characters.
         rec = vosk.KaldiRecognizer(model, sample_rate, d)
 
-        with sd.RawInputStream(samplerate=sample_rate, blocksize=chunk*10, device=device_name, dtype='int16',
+        with sd.RawInputStream(samplerate=sample_rate, blocksize=chunk * 10, device=device_name, dtype='int16',
                                channels=1, callback=callback):
             print('#' * 80)
             print('Press Ctrl+C to stop the recording')
@@ -76,7 +76,8 @@ def action_listen(ser, model, sample_rate, d, chunk):
                     print(f'final text: {text}')
                     cmd = text2cmd(text)
                     if cmd:
-                        ardSerial.execute(ser, cmd)
+                        if ser:
+                            ardSerial.execute(ser, cmd)
                         logger.info(f'exec command: {cmd}')
                         return cmd
                 else:
@@ -86,8 +87,9 @@ def action_listen(ser, model, sample_rate, d, chunk):
                         logger.debug(f'partial: {partial}')
 
     except Exception as e:
-        ardSerial.execute(ser, 'd\n')
-        ardSerial.close_serial(ser)
+        if ser:
+            ardSerial.execute(ser, 'd\n')
+            ardSerial.close_serial(ser)
         raise e
 
 
@@ -147,13 +149,20 @@ def main_loop(mode=0):
             mode = 0
 
 
-ser = ardSerial.get_serial(port=port)
-ardSerial.open_serial(ser)
+try:
+    ser = ardSerial.get_serial(port=port)
+except SerialException as e:
+    ser = None
+    logger.warning(f'Not able to get the serial port. Program will continue, but will not actually send the command.')
+else:
+    logger.debug(f'Got serial port.')
+    ardSerial.open_serial(ser)
+
 try:
     main_loop(mode=0)
-
 except KeyboardInterrupt:
     print('\nDone, exit')
-    ardSerial.execute(ser, 'd\n')
-    ardSerial.close_serial(ser)
+    if ser:
+        ardSerial.execute(ser, 'd\n')
+        ardSerial.close_serial(ser)
     exit(0)

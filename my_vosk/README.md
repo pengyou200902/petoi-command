@@ -31,3 +31,7 @@
    - 注释[vosk_microphone_pi.py](./vosk_microphone_pi.py)第73行，解除第74行注释。
    - 在[cmd_lookup.py](./cmd_lookup.py)，注释掉现有的英语```cmd_table```变量，解除注释另一个中文的```cmd_table```变量。
    - 在[cmd_lookup.py](./cmd_lookup.py)，注释掉现有的```build_dict```函数，解除注释另一个```build_dict```函数。
+ 
+  
+# 整体逻辑
+![img](../Hey%20Bittle.svg)

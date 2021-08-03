@@ -6,7 +6,7 @@ import queue
 import sounddevice as sd
 import vosk
 import utils
-from cmd_lookup import text2cmd, build_dict
+from common.cmd_lookup import text2cmd, build_dict
 from serialMaster import ardSerial
 from serial.serialutil import SerialException
 
@@ -24,7 +24,6 @@ logger.info(device)
 # port='/dev/ttyS0'  # needed when using Pi
 port = '/dev/cu.wchusbserial1430'  # needed when using Mac
 q = queue.Queue()
-sem = threading.Semaphore()
 
 
 def load_model(model):
@@ -113,21 +112,33 @@ def task_action(ser, model, sample_rate, d, chunk):
     action_listen(ser=ser, model=model, sample_rate=sample_rate, d=d, chunk=chunk)
 
 
+def select_template(template_folder: str = r'./recordings'):
+    recordings = utils.get_audio_files(audio_path=template_folder, endswith='.wav')
+    print('用【数字编号】选择要使用的录音作为模板：')
+    for i, r in enumerate(recordings):
+        print(f'\t{i}. {r}')
+    c = input('你的选择 >>> ')
+    try:
+        c = int(c)
+    except (ValueError, IndexError) as e:
+        # This is the default path for your template wav file of wakeup keyword.
+        # If you skip recording, please make sure you have a template file.
+        template = template_folder + '/' + 'template_1.wav'
+        print('无效输入，默认选择 template_1.wav')
+    else:
+        template = template_folder + '/' + recordings[c]
+    return template
+
+
 def main_loop(mode=0):
     vosk_chunk = 20
     sample_rate = 16000
 
     # First you should record the template audio for wakeup word. You can choose to skip.
     recorder = utils.Recorder()
-    recordings = task_record(recorder=recorder)
-    if not recordings or not os.path.exists(recordings[0][0]):
-        # This is the default path for your template wav file of wakeup keyword.
-        # If you skip recording, please make sure you have a template file.
-        template_path = r'./recordings/template_1.wav'
-    else:
-        # Once you choose to record a new template, even if you record multiple templates,
-        # the program will always choose the first one. You can change the logic.
-        template_path = recordings[0][0]
+    task_record(recorder=recorder)
+    template_path = select_template(r'./recordings')
+
     template = utils.Voice(template_path)
 
     # Initialize the Listener of wakeup word.

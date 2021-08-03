@@ -22,7 +22,6 @@ CHUNK = 4000  # 每个缓冲区的帧数
 RATE = 16000  # 采样频率
 CHUNK_TIME = 1 / RATE * CHUNK
 CHANNELS = 1  # 单声道
-# FORMAT = pyaudio.paInt16  # 采样位数，16 bit int
 audio_path = r'./recordings/'
 
 
@@ -88,6 +87,7 @@ def get_audio_files(audio_path=audio_path, endswith='.wav'):
     return sorted(templates)
 
 
+# Not used
 def find_closest(voice: 'Voice', template_voices: list, need_strip=False):
     score = float('inf')
     closest_voice = None
@@ -346,3 +346,5 @@ class Voice:
 
 # v = Voice(r'./recordings/template.wav')
 # v.play()
+
+# print(get_path())

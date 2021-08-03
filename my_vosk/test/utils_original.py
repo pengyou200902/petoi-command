@@ -23,7 +23,7 @@ chunk_time = 1 / RATE * CHUNK
 CHANNELS = 1  # 单声道
 FORMAT = pyaudio.paInt16  # 采样位数，16 bit int
 
-audio_path = r'./recordings/'
+audio_path = r'../recordings/'
 
 
 def euclidean_distance(vec_1, vec_2):
@@ -32,7 +32,7 @@ def euclidean_distance(vec_1, vec_2):
 
 def get_path():
     cur_dir = os.getcwd()
-    new_path = 'recordings'
+    new_path = '../recordings'
     cur_dir = cur_dir + '/' + new_path
     if os.path.exists(cur_dir):
         pass

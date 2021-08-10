@@ -242,9 +242,9 @@ class Listener:
         self.rate = rate
         self.window_size = int(2 / CHUNK_TIME)
         self.template = template
-        self.thresh = 0
-        # self.thresh = 70  # For Mac
-        # self.thresh = 50 # For Pi
+        self.thresh = 0  # For finding proper thresh
+        # self.thresh = 85  # For Mac
+        # self.thresh = 55 # For Pi
 
         self._wakeup = False
         self._frame_window = deque([], maxlen=self.window_size)

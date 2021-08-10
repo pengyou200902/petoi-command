@@ -186,7 +186,7 @@ def task_record(recorder):
     return files
 
 
-def task_listen(listener):
+def task_listen(ser, listener):
     """The function for listening to the wakeup word.
 
     Parameters
@@ -203,6 +203,10 @@ def task_listen(listener):
     logger.info('listen开始监听')
     result = listener.listening()
     if listener.is_wakeup():
+        if ser:
+            # Execute the command if there exists a serial port.
+            ardSerial.execute(ser, 'm0 -40')
+            ardSerial.execute(ser, 'm0 0')
         logger.info('end')
         listener.reset()
         return result
@@ -296,7 +300,7 @@ def main_loop(mode=0):
     while True:
         if mode == 0:
             logger.debug(f'mode={mode}, task_listen')
-            if task_listen(listener=listener):
+            if task_listen(ser, listener=listener):
                 mode = 1
 
         elif mode == 1:

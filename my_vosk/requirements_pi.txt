@@ -27,3 +27,4 @@ SoundFile==0.10.3.post1
 threadpoolctl==2.2.0
 urllib3==1.26.6
 vosk==0.3.30
+pyyaml

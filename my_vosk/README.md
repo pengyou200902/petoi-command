@@ -32,17 +32,23 @@
 1. 录音可以跳过，现成的录音位于[./recordings/template_1.wav](./recordings/template_1.wav)，另一个文件名带```raw```的是
    未过滤的音频。 
    
-1. 调试唤醒词识别的```threshold```：在[utils.py](./utils.py)第119行，现在为0方便调试，在"开始监听"后，观察控制台输出的
-   ```DTW.normalizedDistance```，比如在"未说唤醒词"时，值在115-125震荡，"说出唤醒词"后，值变小，在105-117震荡，
+1. 调试唤醒词识别的```threshold```：在[config.yml](./config/config.yml)中，现在为0方便调试，在"开始监听"后，观察控制台输出的
+   ```DTW.normalizedDistance```，比如：
+   - "**未说唤醒词**"时，值在115-125震荡；  
+   - "**说出唤醒词**"后，值变小，在105-117震荡。  
    那么可以将```threshold```设为120（较宽松），或者115（较严格）。
    
-1. 唤醒后会有提示，则进入了命令词识别，在[cmd_lookup.py](common/cmd_lookup.py)中可以看到现有的命令词，比如可以说出"stand up"。
+1. 唤醒后会有提示，则进入了命令词识别流程，默认在[cmd_lookup.py](common/cmd_lookup.py)中可以看到现有的命令词，比如可以说出"stand up"。
 
-1. 如果想测试中文模型：
-   - 解压中文模型并且文件夹改名为```model```，然后放入```./models```文件夹里。
-   - 注释[vosk_microphone_pi.py](./vosk_microphone_pi.py)第73行，解除第74行注释。
-   - 在[cmd_lookup.py](common/cmd_lookup.py)，注释掉现有的英语```cmd_table```变量，解除注释另一个中文的```cmd_table```变量。
-   - 在[cmd_lookup.py](common/cmd_lookup.py)，注释掉现有的```build_dict```函数，解除注释另一个```build_dict```函数。
+1. 如果想换中文模型（其他语言类似）：
+   - 解压中文模型，推荐放入```./models```文件夹里，并在[config.yml](./config/config.yml)中修改```vosk_model_path```。
+   - 修改[config.yml](./config/config.yml)中的```cmd_table```改为如下内容：
+   ```yaml
+   cmd_table:
+     package: my_vosk.common.cmd_lookup
+     table_name: cmd_table_cn
+     build_dict: build_dict_cn
+   ```
  
   
 # 整体逻辑

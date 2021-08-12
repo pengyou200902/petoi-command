@@ -1,49 +1,54 @@
 """
-cmd_table : dict{ str:str }
-    key represents the result of speech recognition(voice command).
-    value represents the corresponding Petoi command.
+cmd_table_[xx] : dict{ str:str }
+    Key represents the result of speech recognition(voice command).
+    Value represents the corresponding Petoi command.
 """
 
-# ===================================== Chinese ====================================
-# cmd_table = {
-#     '坐下':   'ksit',
-#     '坐':     'ksit',
-#     '请坐':   'ksit',
-#     '站起来': 'kbalance',
-#     '起立':   'kbalance',
-#     '向前走': 'kwkF',
-#     '向前跑': 'ktrF',
-#     '检查':   'c',
-#     '睡觉':   'rest',
-#     '趴下':   'd',
-#     '停':     'd',
-#     '停下':   'd',
-# }
+# ===================================== Chinese(zh) ====================================
+cmd_table_cn = {
+    '坐 下':   'ksit',
+    '坐':     'ksit',
+    '请 坐':   'ksit',
+    '站 起 来': 'kbalance',
+    '起 立':   'kbalance',
+    '向 前 走': 'kwkF',
+    '向 前 跑': 'ktrF',
+    '检 查':   'c',
+    '睡 觉':   'rest',
+    '趴 下':   'd',
+    '停':     'd',
+    '停 下':   'd',
+}
 
 
-# def build_dict():
-#     """This is for Chinese.
-#
-#     Build a custom list of words from cmd_table for vosk model to choose from when recognizing.
-#
-#     Returns
-#     -------
-#     d : str
-#         The str form of a custom list of words.
-#     """
-#     d = []
-#     keys = list(cmd_table.keys())
-#     for k in keys:
-#         d += list(k)
-#     d = [" ".join(list(set(d)))]
-#     d = str(d).replace("'", "\"")
-#     print(d)
-#     return d
-# ===================================== Chinese ====================================
+def build_dict_cn(cmd_table):
+    """This is for Chinese.
+
+    Build a custom list of words from cmd_table for vosk model to choose from when recognizing.
+
+    Parameters
+    ----------
+    cmd_table : dict{ str:str }
+        Description as above.
+
+    Returns
+    -------
+    d : str
+        The str form of a custom list of words.
+    """
+    d = []
+    keys = list(cmd_table.keys())
+    for k in keys:
+        d += list(k)
+    d = [" ".join(list(set(d)))]
+    d = str(d).replace("'", "\"")
+    print(d)
+    return d
+# ===================================== Chinese(zh) ====================================
 
 
-# ===================================== English ====================================
-cmd_table = {
+# ===================================== English(en-us) ====================================
+cmd_table_en = {
     'sit down': 'ksit',
     'please sit': 'ksit',
     'stand up': 'kbalance',
@@ -57,10 +62,15 @@ cmd_table = {
 }
 
 
-def build_dict():
+def build_dict_en(cmd_table):
     """This is for English.
 
     Build a custom list of words from cmd_table for vosk model to choose from when recognizing.
+
+    Parameters
+    ----------
+    cmd_table : dict{ str:str }
+        Description as above.
 
     Returns
     -------
@@ -79,16 +89,19 @@ def build_dict():
     d = str(d).replace("'", "\"")
     print(d)
     return d
-# ===================================== English ====================================
+# ===================================== English(en-us) ====================================
 
 
-def text2cmd(text):
+def text2cmd(text, cmd_table):
     """Convert the result of speech recognition into Petoi command.
 
     Parameters
     ----------
     text : str
         The result from vosk model after speech recognition.
+
+    cmd_table : dict{ str:str }
+        Description as above.
 
     Returns
     -------

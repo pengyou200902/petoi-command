@@ -1,0 +1,25 @@
+# This variable is just used for showing current language of voice commands. Changing it will not change anything.
+language: en-us
+
+# Location of command table and build_dict function.
+cmd_table:
+  package: my_vosk.common.cmd_lookup
+  table_name: cmd_table_cn
+  build_dict: build_dict_cn
+
+# Location of the recording files.
+recording_path: recordings
+
+# Config for Listener.
+Listener:
+  # Path to template wave file. if you want to record new one(s), set template: **JUST EMPTY, NOTHING HERE**
+  template:
+#  template: recordings/template_1.wav
+
+  # set thresh=0 when first run in order to fine-tune the value of threshold.
+#  thresh: 0
+  thresh: 85  # For Mac
+#  thresh: 55 # For Pi
+
+# Config for load_model function.
+vosk_model_path: models/vosk-model-small-cn

@@ -25,8 +25,13 @@ CHANNELS = 1  # 单声道
 audio_path = r'./recordings/'
 
 
-def get_path():
+def get_path(new_path: str = 'recordings'):
     """Get the absolute path of the folder for recordings.
+
+    Parameters
+    ----------
+    new_path : str
+        The folder for recordings.
 
     Returns
     -------
@@ -35,7 +40,6 @@ def get_path():
     """
 
     cur_dir = os.getcwd()
-    new_path = 'recordings'
     cur_dir = cur_dir + '/' + new_path
     if os.path.exists(cur_dir):
         pass
@@ -45,7 +49,7 @@ def get_path():
 
 
 # Not used
-def resample(src, dst, n_channels=CHANNELS, rate=RATE):
+def resample(src: str, dst: str, n_channels: int = CHANNELS, rate: int = RATE):
     """Use ffmpeg command to resample a wave file.
 
     Parameters
@@ -82,7 +86,7 @@ def resample(src, dst, n_channels=CHANNELS, rate=RATE):
 
 
 # audio point check
-def strip_silence(wave_data, frame_length=CHUNK, hop_length=CHUNK // 2):
+def strip_silence(wave_data, frame_length: int = CHUNK, hop_length: int = CHUNK // 2):
     """Compute root-mean-square (RMS) value for each frame.
 
     Parameters
@@ -113,7 +117,7 @@ def strip_silence(wave_data, frame_length=CHUNK, hop_length=CHUNK // 2):
     return new_signal
 
 
-def convert_strip(frames: [list, deque], frame_length=CHUNK, hop_length=CHUNK // 2):
+def convert_strip(frames: [list, deque], frame_length: int = CHUNK, hop_length: int = CHUNK // 2):
     """Convert raw audio data(bytes) into integers and strip silence.
 
     Parameters
@@ -140,7 +144,7 @@ def convert_strip(frames: [list, deque], frame_length=CHUNK, hop_length=CHUNK //
     return data
 
 
-def get_audio_files(audio_path=audio_path, endswith='.wav'):
+def get_audio_files(audio_path: str = audio_path, endswith: str = '.wav'):
     """Get audio files in a folder.
 
     Parameters
@@ -236,16 +240,13 @@ class Listener:
         A deque for storing audio data chunks during listening.
     """
 
-    def __init__(self, template: 'Voice', chunk=CHUNK, n_channels=CHANNELS, rate=RATE):
+    def __init__(self, template: 'Voice', chunk=CHUNK, n_channels=CHANNELS, rate=RATE, thresh=0):
         self.chunk = chunk
         self.channels = n_channels
         self.rate = rate
         self.window_size = int(2 / CHUNK_TIME)
         self.template = template
-        self.thresh = 0  # For finding proper thresh
-        # self.thresh = 85  # For Mac
-        # self.thresh = 55 # For Pi
-
+        self.thresh = thresh  # Set 0 For finding proper thresh
         self._wakeup = False
         self._frame_window = deque([], maxlen=self.window_size)
         #
@@ -335,11 +336,14 @@ class Recorder:
         A list for storing audio data chunks during recording.
     """
 
-    def __init__(self, chunk=CHUNK, n_channels=CHANNELS, rate=RATE):
+    def __init__(self, folder='recordings', chunk=CHUNK, n_channels=CHANNELS, rate=RATE):
         """Constructor of class Recorder.
 
         Parameters
         ----------
+        folder :  str
+            Folder for saving wave files.
+
         chunk : int
             The chunk size when storing audio data.
 
@@ -349,7 +353,7 @@ class Recorder:
         rate : int
             Sample rate of the audio data.
         """
-
+        self.folder = folder
         self.chunk = chunk
         self.channels = n_channels
         self.rate = rate
@@ -406,7 +410,7 @@ class Recorder:
 
         if not filename.endswith(".wav"):
             filename = filename + ".wav"
-        path = get_path()
+        path = get_path(new_path=self.folder)
         raw = path + r'/raw_' + filename
         filename = path + r'/' + filename
         # save raw audio
@@ -528,7 +532,7 @@ class Voice:
 
         Parameters
         ----------
-        path_or_data : (str, list, np.ndarray, bytes)
+        path_or_data : str, list, np.ndarray, bytes
         """
 
         if isinstance(path_or_data, str):
@@ -542,7 +546,7 @@ class Voice:
             self.wave_data = path_or_data
             self.sample_rate = RATE
 
-    def __load_data(self, file_path):
+    def __load_data(self, file_path: str):
         """Load wave data from a file.
 
         Parameters

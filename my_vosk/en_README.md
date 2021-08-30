@@ -2,6 +2,12 @@
 
 ## [Chinese ReadMe for PC](README.md) 
 
+## Demo Video
+- **EP 1 is for Petoi with USB Adaptor with MacBook Pro**  
+  [EP 1 Video Link](https://www.bilibili.com/video/BV13q4y1Q7kZ)  
+- **EP 2 is for Petoi with RaspberryPi**  
+  [EP 2 Video Link](https://www.bilibili.com/video/BV13q4y1Q7kZ?p=2)
+
 # Preparation
 1. Create a virtual environment on your PC(NOT Pi) with ```python==3.7.3``` and then activate it.
 

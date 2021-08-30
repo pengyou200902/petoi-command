@@ -2,7 +2,13 @@
 
 ## [Chinese ReadMe for RaspberryPi](README_RaspberryPi.md) 
 
-# Prepare the environment
+## Demo Video
+- **EP 1 is for Petoi with USB Adaptor with MacBook Pro**  
+  [EP 1 Video Link](https://www.bilibili.com/video/BV13q4y1Q7kZ)  
+- **EP 2 is for Petoi with RaspberryPi**  
+  [EP 2 Video Link](https://www.bilibili.com/video/BV13q4y1Q7kZ?p=2)
+
+# Prepare environment
 ## Simple Version (Collection of Shell commands):
 ```shell
 bash rpi_simple.sh

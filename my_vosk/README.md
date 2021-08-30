@@ -2,6 +2,12 @@
 
 ## [English ReadMe](en_README.md)  
 
+## Demo 视频
+- **P1 是 Petoi 和 USB 适配器接在 MacBook Pro**  
+  [EP 1 Video Link](https://www.bilibili.com/video/BV13q4y1Q7kZ)  
+- **P2 是 Petoi 接上 RaspberryPi**  
+  [EP 2 Video Link](https://www.bilibili.com/video/BV13q4y1Q7kZ?p=2)
+
 # 准备
 1. 在电脑上（非Pi）创建环境```python==3.7.3```，激活环境。
 

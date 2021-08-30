@@ -2,6 +2,12 @@
 
 ## [English ReadMe for RaspberryPi](en_README_RaspberryPi.md)
 
+## Demo 视频
+- **P1 是 Petoi 和 USB 适配器接在 MacBook Pro**  
+  [EP 1 Video Link](https://www.bilibili.com/video/BV13q4y1Q7kZ)  
+- **P2 是 Petoi 接上 RaspberryPi**  
+  [EP 2 Video Link](https://www.bilibili.com/video/BV13q4y1Q7kZ?p=2)
+
 # 准备环境
 ## 简易版(Shell指令合集)：
 ```shell

@@ -1,9 +1,11 @@
-# [ReadMe for RaspberryPi](README_RaspberryPi.md) 
+## [树莓派 ReadMe](README_RaspberryPi.md) 
+
+## [English ReadMe](en_README.md)  
 
 # 准备
 1. 在电脑上（非Pi）创建环境```python==3.7.3```，激活环境。
 
-1. 安装```portaudio```：
+2. 安装```portaudio```：
     - Win/Mac/Linux: 
       ```shell
       conda install portaudio
@@ -13,20 +15,21 @@
       brew install portaudio
       ```
 
-1. 安装其余依赖
+3. 安装其余依赖
    ```shell
    pip install -r requirements.txt
    ```
 
-1. 下载[vosk model](https://alphacephei.com/vosk/models) ，选择下载```vosk-model-small-en-us```以及```vosk-model-small-cn```
+4. 下载[vosk model](https://alphacephei.com/vosk/models) ，选择下载```vosk-model-small-en-us```以及```vosk-model-small-cn```
 备用，前者是英语（美国），后者是中文，这两者都是小模型。
    
-1. 目前代码默认用**英语模型**，下载后，将解压出的**文件夹**改名为```model```，并放入```./models```文件夹里。
+5. 目前代码默认用**英语模型**，下载后，将解压出的**文件夹**放入```./models```里，并在[config](./config/config.yml)
+   里设置```vosk_model_path```。
 
 # 运行
-1. 终端/cmd进入my_vosk文件夹后，输入
+1. **重要**：终端/cmd进入my_vosk文件夹后，输入
    ```shell
-   python vosk_microphone_pi.py
+   python main.py
    ```
 
 1. 录音可以跳过，现成的录音位于[./recordings/template_1.wav](./recordings/template_1.wav)，另一个文件名带```raw```的是

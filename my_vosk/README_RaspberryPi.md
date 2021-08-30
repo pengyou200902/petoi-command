@@ -1,3 +1,7 @@
+## [电脑PC ReadMe](README.md) 
+
+## [English ReadMe for RaspberryPi](en_README_RaspberryPi.md)
+
 # 准备环境
 ## 简易版(Shell指令合集)：
 ```shell
@@ -14,21 +18,21 @@ bash rpi_simple.sh
    curl https://tech.biko.pub/resource/rpi-replace-apt-source-buster.sh | sudo bash
    ```
 
-1. 安装```portaudio```：
+2. 安装```portaudio```：
    ```shell
    sudo apt-get install make build-essential libportaudio0 libportaudio2 libportaudiocpp0 portaudio19-dev libatlas-base-dev
    ```
    
-1. 在Pi上创建环境```python==3.7.3```，然后激活环境。
+3. 在Pi上创建环境```python==3.7.3```，然后激活环境。
    - 如果创建venv：
      ```shell
      python3 -m venv /path/to/environment
      ```
 
-1. 安装[Scipy](https://www.piwheels.org/project/scipy/) 下载安装包到Pi本地后```pip install 文件名```，
+4. 安装[Scipy](https://www.piwheels.org/project/scipy/) 下载安装包到Pi本地后```pip install 文件名```，
    需要下载文件名中带有```cp37-cp37m-linux_armv7l```的版本。
    
-1. 安装librosa：
+5. 安装librosa：
    - **退出环境后**
       ```shell
       sudo apt install libblas-dev llvm llvm-dev
@@ -48,22 +52,21 @@ bash rpi_simple.sh
       ```  
       版本号举例比如```llvm==7.0.1```对应最新的是```llvmlite==0.32.1```和```numba==0.49.1```。
 
-1. 安装其余依赖
+6. 安装其余依赖
    ```shell
    pip install -r requirements_pi.txt
    ```
 
-1. 下载[vosk model](https://alphacephei.com/vosk/models) ，选择下载```vosk-model-small-en-us```以及```vosk-model-small-cn```
+7. 下载[vosk model](https://alphacephei.com/vosk/models) ，选择下载```vosk-model-small-en-us```以及```vosk-model-small-cn```
 备用，前者是英语（美国），后者是中文，这两者都是小模型。
    
-1. 目前代码默认用**英语模型**，下载后，将解压出的**文件夹**改名为```model```，并放入```./models```文件夹里。
+8. 目前代码默认用**英语模型**，下载后，将解压出的**文件夹**放入```./models```里，并在[config](./config/config.yml)
+   里设置```vosk_model_path```。
 
 # 运行
-1. 注释[vosk_microphone_pi.py](./vosk_microphone_pi.py)的第25行，并解除24行的注释。
-
-1. 终端/cmd进入my_vosk文件夹后，输入
+1. **重要**：终端/cmd进入my_vosk文件夹后，输入
    ```shell
-   python vosk_microphone_pi.py
+   python main.py
    ```
 
 1. 录音可以跳过，现成的录音位于[./recordings/template_1.wav](./recordings/template_1.wav)，另一个文件名带```raw```的是
